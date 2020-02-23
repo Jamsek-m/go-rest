@@ -20,14 +20,14 @@ func Json(res http.ResponseWriter, args JsonArgs) {
 	}
 
 	if args.Headers != nil {
-		if _, present := args.Headers[headers.HEADER_CONTENT_TYPE]; !present {
-			res.Header().Add(headers.HEADER_CONTENT_TYPE, media.APPLICATION_JSON)
+		if _, present := args.Headers[headers.CONTENT_TYPE]; !present {
+			res.Header().Add(headers.CONTENT_TYPE, media.APPLICATION_JSON)
 		}
 		for headerName, headerValue := range args.Headers {
 			res.Header().Add(headerName, headerValue)
 		}
 	} else {
-		res.Header().Add(headers.HEADER_CONTENT_TYPE, media.APPLICATION_JSON)
+		res.Header().Add(headers.CONTENT_TYPE, media.APPLICATION_JSON)
 	}
 
 	res.WriteHeader(args.Status)
@@ -41,7 +41,7 @@ func Json(res http.ResponseWriter, args JsonArgs) {
 }
 
 func HandleError(res http.ResponseWriter, err error) {
-	res.Header().Add(headers.HEADER_CONTENT_TYPE, media.APPLICATION_JSON)
+	res.Header().Add(headers.CONTENT_TYPE, media.APPLICATION_JSON)
 
 	var statusCode int
 	var responseBody errors.ErrorResponse

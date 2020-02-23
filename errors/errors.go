@@ -34,6 +34,10 @@ func (err RestError) Error() string {
 	return err.Message
 }
 
-func NewRestError(message string, status int) error {
+func NewGenericRestError(message string) error {
 	return RestError{Message: message, Status: http.StatusInternalServerError}
+}
+
+func NewRestError(message string, status int) error {
+	return RestError{Message: message, Status: status}
 }
