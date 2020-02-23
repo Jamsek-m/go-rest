@@ -2,10 +2,11 @@ package rest
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/Jamsek-m/go-rest/errors"
 	"github.com/Jamsek-m/go-rest/headers"
 	"github.com/Jamsek-m/go-rest/media"
-	"net/http"
 )
 
 type JsonArgs struct {
