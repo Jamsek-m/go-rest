@@ -60,3 +60,13 @@ func HandleError(res http.ResponseWriter, err error) {
 		println(err)
 	}
 }
+
+func ParseBody(req *http.Request, entity interface{}) error {
+	err := json.NewDecoder(req.Body).Decode(entity)
+	return err
+}
+
+func SerializeBody(res http.ResponseWriter, body interface{}) error {
+	err := json.NewEncoder(res).Encode(body)
+	return err
+}
