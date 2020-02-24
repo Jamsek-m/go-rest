@@ -34,8 +34,7 @@ func Json(res http.ResponseWriter, args JsonArgs) {
 	res.WriteHeader(args.Status)
 
 	if args.Data != nil {
-		if err := json.NewEncoder(res).Encode(args.Data); err != nil {
-			// logger.Log.WithError(err).Error("Error encoding to json!")
+		if err := SerializeBody(res, args.Data); err != nil {
 			println(err)
 		}
 	}
@@ -56,7 +55,7 @@ func HandleError(res http.ResponseWriter, err error) {
 	}
 
 	res.WriteHeader(statusCode)
-	if err := json.NewEncoder(res).Encode(responseBody); err != nil {
+	if err := SerializeBody(res, responseBody); err != nil {
 		println(err)
 	}
 }
