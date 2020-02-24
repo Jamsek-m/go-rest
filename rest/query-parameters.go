@@ -62,14 +62,22 @@ func (queryParams QueryParams) GetSort() []QuerySort {
 
 	for _, sort := range orderArray {
 		sortValues := strings.Split(sort, " ")
-		field, direction := sortValues[0], sortValues[1]
+		if len(sortValues) == 1 {
+			querySort := QuerySort{
+				Field:     sortValues[0],
+				Direction: NewSortDirection(string(SortAscending)),
+			}
+			sorts = append(sorts, querySort)
+		} else if len(sortValues) >= 2 {
+			field, direction := sortValues[0], sortValues[1]
 
-		querySort := QuerySort{
-			Field:     field,
-			Direction: NewSortDirection(direction),
+			querySort := QuerySort{
+				Field:     field,
+				Direction: NewSortDirection(direction),
+			}
+
+			sorts = append(sorts, querySort)
 		}
-
-		sorts = append(sorts, querySort)
 	}
 
 	return sorts
