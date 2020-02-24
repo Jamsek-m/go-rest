@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"fmt"
 	"net/url"
 	"strconv"
 	"strings"
@@ -30,12 +31,25 @@ type QuerySort struct {
 	Direction SortDirection
 }
 
+func (querySort QuerySort) ToGormOrderString() string {
+	return fmt.Sprintf("%s %s", querySort.Field, querySort.Direction)
+}
+
 // ****************** Query Params ******************
 
 type QueryParams struct {
 	Offset int
 	Limit  int
 	Order  string
+}
+
+func (queryParams QueryParams) BuildGormOrderString() string {
+	sorts := queryParams.GetSort()
+	mappedSorts := make([]string, len(sorts))
+	for index, item := range sorts {
+		mappedSorts[index] = item.ToGormOrderString()
+	}
+	return strings.Join(mappedSorts[:], ",")
 }
 
 func (queryParams QueryParams) GetSort() []QuerySort {
